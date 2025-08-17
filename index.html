@@ -3,95 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Games Challenge</title>
+    <title>GameHub Pro - Mini Games Challenge</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎮 Mini Games Challenge</h1>
-            <p>Complete all games to unlock the GitHub repository!</p>
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🎮</span>
+                <span class="brand-text">GameHub Pro</span>
             </div>
-            <div class="score">Games Completed: <span id="completed">0</span>/4</div>
-        </header>
-
-        <div class="games-grid">
-            <!-- Memory Game -->
-            <div class="game-card" id="memory-game">
-                <h3>🧠 Memory Game</h3>
-                <p>Match all the pairs!</p>
-                <div class="game-status" id="memory-status">Not Started</div>
-                <div class="memory-grid" id="memory-grid"></div>
-                <button class="game-btn" onclick="startMemoryGame()">Start Game</button>
-            </div>
-
-            <!-- Number Guessing Game -->
-            <div class="game-card" id="guess-game">
-                <h3>🔢 Number Guessing</h3>
-                <p>Guess the number between 1-20!</p>
-                <div class="game-status" id="guess-status">Not Started</div>
-                <div class="guess-content">
-                    <input type="number" id="guess-input" min="1" max="20" placeholder="Enter guess">
-                    <div id="guess-feedback"></div>
-                    <div id="guess-attempts">Attempts: 0</div>
+            <div class="nav-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Score</span>
+                    <span class="stat-value" id="total-score">0</span>
                 </div>
-                <button class="game-btn" onclick="startGuessGame()">Start Game</button>
-            </div>
-
-            <!-- Color Match Game -->
-            <div class="game-card" id="color-game">
-                <h3>🎨 Color Match</h3>
-                <p>Click when colors match!</p>
-                <div class="game-status" id="color-status">Not Started</div>
-                <div class="color-display">
-                    <div class="color-box" id="color-box1"></div>
-                    <div class="color-box" id="color-box2"></div>
+                <div class="stat-item">
+                    <span class="stat-label">Time</span>
+                    <span class="stat-value" id="total-time">00:00</span>
                 </div>
-                <div id="color-score">Score: 0</div>
-                <button class="game-btn" onclick="startColorGame()">Start Game</button>
-            </div>
-
-            <!-- Reaction Time Game -->
-            <div class="game-card" id="reaction-game">
-                <h3>⚡ Reaction Time</h3>
-                <p>Click when the circle turns green!</p>
-                <div class="game-status" id="reaction-status">Not Started</div>
-                <div class="reaction-area" id="reaction-area">
-                    <div class="reaction-circle" id="reaction-circle"></div>
-                </div>
-                <div id="reaction-time">Best Time: --</div>
-                <button class="game-btn" onclick="startReactionGame()">Start Game</button>
             </div>
         </div>
+    </nav>
 
-        <!-- Victory Modal -->
-        <div class="modal" id="victory-modal">
-            <div class="modal-content">
-                <h2>🎉 Congratulations!</h2>
-                <p>You've completed all the mini-games!</p>
-                <div class="github-info">
-                    <h3>🚀 Import GitHub Repository</h3>
-                    <p>Now you can import this project to your GitHub:</p>
-                    <div class="code-block">
-                        <code>git clone https://github.com/yourusername/mini-games-challenge.git</code>
+    <div class="container">
+        <header class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Master the Challenge</span>
+                    <span class="subtitle">Complete all mini-games to unlock exclusive content</span>
+                </h1>
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span>Progress</span>
+                        <span id="progress-text">0/5 Games Completed</span>
                     </div>
-                    <div class="instructions">
-                        <h4>Steps to import:</h4>
-                        <ol>
-                            <li>Create a new repository on GitHub</li>
-                            <li>Copy the repository URL</li>
-                            <li>Use: <code>git remote add origin [your-repo-url]</code></li>
-                            <li>Push with: <code>git push -u origin main</code></li>
-                        </ol>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
                     </div>
                 </div>
-                <button class="close-btn" onclick="closeModal()">Close</button>
+                <div class="achievement-badges" id="achievement-badges">
+                    <div class="badge locked" data-game="memory">🧠 Memory Master</div>
+                    <div class="badge locked" data-game="guess">🎯 Number Ninja</div>
+                    <div class="badge locked" data-game="color">🎨 Color Expert</div>
+                    <div class="badge locked" data-game="reaction">⚡ Lightning Fast</div>
+                    <div class="badge locked" data-game="puzzle">🧩 Puzzle Solver</div>
+                </div>
+            </div>
+        </header>
+
+        <main class="games-section">
+            <div class="section-header">
+                <h2>Game Challenges</h2>
+                <p>Test your skills across different categories</p>
+            </div>
+
+            <div class="games-grid">
+                <!-- Memory Game -->
+                <div class="game-card" id="memory-game" data-difficulty="Medium">
+                    <div class="game-header">
+                        <div class="game-icon">🧠</div>
+                        <div class="game-info">
+                            <h3>Memory Challenge</h3>
+                            <p>Match pairs of cards to test your memory</p>
+                            <div class="game-meta">
+                                <span class="difficulty">Medium</span>
+                                <span class="time-estimate">2-3 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-status" id="memory-status">Ready to Play</div>
+                    <div class="game-content">
+                        <div class="memory-grid" id="memory-grid"></div>
+                        <div class="game-stats">
+                            <div class="stat">Moves: <span id="memory-moves">0</span></div>
+                            <div class="stat">Time: <span id="memory-time">00:00</span></div>
+                        </div>
+                    </div>
+                    <button class="game-btn primary" onclick="startMemoryGame()">
+                        <span>Start Challenge</span>
+                    </button>
+                </div>
+
+                <!-- Number Guessing Game -->
+                <div class="game-card" id="guess-game" data-difficulty="Easy">
+                    <div class="game-header">
+                        <div class="game-icon">🎯</div>
+                        <div class="game-info">
+                            <h3>Number Hunter</h3>
+                            <p>Guess the secret number with strategic thinking</p>
+                            <div class="game-meta">
+                                <span class="difficulty easy">Easy</span>
+                                <span class="time-estimate">1-2 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-status" id="guess-status">Ready to Play</div>
+                    <div class="game-content">
+                        <div class="guess-interface">
+                            <input type="number" id="guess-input" min="1" max="100" placeholder="Enter your guess (1-100)">
+                            <button class="guess-btn" onclick="makeGuess()">Guess</button>
+                        </div>
+                        <div class="guess-feedback" id="guess-feedback"></div>
+                        <div class="game-stats">
+                            <div class="stat">Attempts: <span id="guess-attempts">0/7</span></div>
+                            <div class="stat">Range: <span id="guess-range">1-100</span></div>
+                        </div>
+                    </div>
+                    <button class="game-btn primary" onclick="startGuessGame()">
+                        <span>Start Hunt</span>
+                    </button>
+                </div>
+
+                <!-- Color Match Game -->
+                <div class="game-card" id="color-game" data-difficulty="Hard">
+                    <div class="game-header">
+                        <div class="game-icon">🎨</div>
+                        <div class="game-info">
+                            <h3>Color Sync</h3>
+                            <p>React quickly when colors match perfectly</p>
+                            <div class="game-meta">
+                                <span class="difficulty hard">Hard</span>
+                                <span class="time-estimate">2-4 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-status" id="color-status">Ready to Play</div>
+                    <div class="game-content">
+                        <div class="color-display">
+                            <div class="color-box" id="color-box1"></div>
+                            <div class="color-box" id="color-box2"></div>
+                        </div>
+                        <div class="color-instructions">Click anywhere when colors match!</div>
+                        <div class="game-stats">
+                            <div class="stat">Score: <span id="color-score">0/15</span></div>
+                            <div class="stat">Accuracy: <span id="color-accuracy">0%</span></div>
+                        </div>
+                    </div>
+                    <button class="game-btn primary" onclick="startColorGame()">
+                        <span>Start Sync</span>
+                    </button>
+                </div>
+
+                <!-- Reaction Time Game -->
+                <div class="game-card" id="reaction-game" data-difficulty="Medium">
+                    <div class="game-header">
+                        <div class="game-icon">⚡</div>
+                        <div class="game-info">
+                            <h3>Lightning Reflexes</h3>
+                            <p>Test your reaction speed and precision</p>
+                            <div class="game-meta">
+                                <span class="difficulty">Medium</span>
+                                <span class="time-estimate">1-2 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-status" id="reaction-status">Ready to Play</div>
+                    <div class="game-content">
+                        <div class="reaction-area" id="reaction-area">
+                            <div class="reaction-circle" id="reaction-circle"></div>
+                            <div class="reaction-instruction">Wait for green, then click!</div>
+                        </div>
+                        <div class="game-stats">
+                            <div class="stat">Best: <span id="reaction-best">--</span></div>
+                            <div class="stat">Average: <span id="reaction-avg">--</span></div>
+                        </div>
+                    </div>
+                    <button class="game-btn primary" onclick="startReactionGame()">
+                        <span>Test Reflexes</span>
+                    </button>
+                </div>
+
+                <!-- Puzzle Game -->
+                <div class="game-card" id="puzzle-game" data-difficulty="Hard">
+                    <div class="game-header">
+                        <div class="game-icon">🧩</div>
+                        <div class="game-info">
+                            <h3>Sliding Puzzle</h3>
+                            <p>Arrange numbers in correct order</p>
+                            <div class="game-meta">
+                                <span class="difficulty hard">Hard</span>
+                                <span class="time-estimate">3-5 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-status" id="puzzle-status">Ready to Play</div>
+                    <div class="game-content">
+                        <div class="puzzle-grid" id="puzzle-grid"></div>
+                        <div class="game-stats">
+                            <div class="stat">Moves: <span id="puzzle-moves">0</span></div>
+                            <div class="stat">Time: <span id="puzzle-time">00:00</span></div>
+                        </div>
+                    </div>
+                    <button class="game-btn primary" onclick="startPuzzleGame()">
+                        <span>Start Puzzle</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-section">
+            <div class="section-header">
+                <h2>Your Best Scores</h2>
+                <p>Track your progress and achievements</p>
+            </div>
+            <div class="leaderboard-grid">
+                <div class="score-card">
+                    <div class="score-icon">🧠</div>
+                    <div class="score-info">
+                        <h4>Memory Challenge</h4>
+                        <div class="score-value" id="memory-best-score">Not played</div>
+                    </div>
+                </div>
+                <div class="score-card">
+                    <div class="score-icon">🎯</div>
+                    <div class="score-info">
+                        <h4>Number Hunter</h4>
+                        <div class="score-value" id="guess-best-score">Not played</div>
+                    </div>
+                </div>
+                <div class="score-card">
+                    <div class="score-icon">🎨</div>
+                    <div class="score-info">
+                        <h4>Color Sync</h4>
+                        <div class="score-value" id="color-best-score">Not played</div>
+                    </div>
+                </div>
+                <div class="score-card">
+                    <div class="score-icon">⚡</div>
+                    <div class="score-info">
+                        <h4>Lightning Reflexes</h4>
+                        <div class="score-value" id="reaction-best-score">Not played</div>
+                    </div>
+                </div>
+                <div class="score-card">
+                    <div class="score-icon">🧩</div>
+                    <div class="score-info">
+                        <h4>Sliding Puzzle</h4>
+                        <div class="score-value" id="puzzle-best-score">Not played</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Victory Modal -->
+    <div class="modal-overlay" id="victory-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>🎉 Congratulations, Champion!</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-content">
+                <div class="victory-stats">
+                    <div class="victory-stat">
+                        <span class="stat-number" id="final-score">0</span>
+                        <span class="stat-label">Total Score</span>
+                    </div>
+                    <div class="victory-stat">
+                        <span class="stat-number" id="final-time">00:00</span>
+                        <span class="stat-label">Total Time</span>
+                    </div>
+                </div>
+                
+                <div class="github-section">
+                    <div class="github-header">
+                        <div class="github-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                        <h3>Ready to Build Your Own?</h3>
+                        <p>Get the complete source code and start customizing!</p>
+                    </div>
+                    
+                    <div class="github-features">
+                        <div class="feature">
+                            <span class="feature-icon">📁</span>
+                            <span>Complete source code</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🎨</span>
+                            <span>Customizable themes</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📱</span>
+                            <span>Responsive design</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🚀</span>
+                            <span>Easy deployment</span>
+                        </div>
+                    </div>
+
+                    <div class="github-instructions">
+                        <h4>Quick Setup Guide</h4>
+                        <div class="instruction-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <div class="step-content">
+                                    <strong>Create Repository</strong>
+                                    <p>Create a new repository on GitHub</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <div class="step-content">
+                                    <strong>Clone & Setup</strong>
+                                    <div class="code-block">
+                                        <code>git clone https://github.com/yourusername/gamehub-pro.git</code>
+                                        <button class="copy-btn" onclick="copyToClipboard('git clone https://github.com/yourusername/gamehub-pro.git')">Copy</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <div class="step-content">
+                                    <strong>Install & Run</strong>
+                                    <div class="code-block">
+                                        <code>npm install && npm run dev</code>
+                                        <button class="copy-btn" onclick="copyToClipboard('npm install && npm run dev')">Copy</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="github-actions">
+                        <a href="https://github.com" target="_blank" class="btn-github">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            View on GitHub
+                        </a>
+                        <button class="btn-secondary" onclick="shareResults()">Share Results</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="index.js"></script>
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
