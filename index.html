@@ -3,11 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mini Games Challenge</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <span></span>
+    <div class="container">
+        <header>
+            <h1>🎮 Mini Games Challenge</h1>
+            <p>Complete all games to unlock the GitHub repository!</p>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="score">Games Completed: <span id="completed">0</span>/4</div>
+        </header>
+
+        <div class="games-grid">
+            <!-- Memory Game -->
+            <div class="game-card" id="memory-game">
+                <h3>🧠 Memory Game</h3>
+                <p>Match all the pairs!</p>
+                <div class="game-status" id="memory-status">Not Started</div>
+                <div class="memory-grid" id="memory-grid"></div>
+                <button class="game-btn" onclick="startMemoryGame()">Start Game</button>
+            </div>
+
+            <!-- Number Guessing Game -->
+            <div class="game-card" id="guess-game">
+                <h3>🔢 Number Guessing</h3>
+                <p>Guess the number between 1-20!</p>
+                <div class="game-status" id="guess-status">Not Started</div>
+                <div class="guess-content">
+                    <input type="number" id="guess-input" min="1" max="20" placeholder="Enter guess">
+                    <div id="guess-feedback"></div>
+                    <div id="guess-attempts">Attempts: 0</div>
+                </div>
+                <button class="game-btn" onclick="startGuessGame()">Start Game</button>
+            </div>
+
+            <!-- Color Match Game -->
+            <div class="game-card" id="color-game">
+                <h3>🎨 Color Match</h3>
+                <p>Click when colors match!</p>
+                <div class="game-status" id="color-status">Not Started</div>
+                <div class="color-display">
+                    <div class="color-box" id="color-box1"></div>
+                    <div class="color-box" id="color-box2"></div>
+                </div>
+                <div id="color-score">Score: 0</div>
+                <button class="game-btn" onclick="startColorGame()">Start Game</button>
+            </div>
+
+            <!-- Reaction Time Game -->
+            <div class="game-card" id="reaction-game">
+                <h3>⚡ Reaction Time</h3>
+                <p>Click when the circle turns green!</p>
+                <div class="game-status" id="reaction-status">Not Started</div>
+                <div class="reaction-area" id="reaction-area">
+                    <div class="reaction-circle" id="reaction-circle"></div>
+                </div>
+                <div id="reaction-time">Best Time: --</div>
+                <button class="game-btn" onclick="startReactionGame()">Start Game</button>
+            </div>
+        </div>
+
+        <!-- Victory Modal -->
+        <div class="modal" id="victory-modal">
+            <div class="modal-content">
+                <h2>🎉 Congratulations!</h2>
+                <p>You've completed all the mini-games!</p>
+                <div class="github-info">
+                    <h3>🚀 Import GitHub Repository</h3>
+                    <p>Now you can import this project to your GitHub:</p>
+                    <div class="code-block">
+                        <code>git clone https://github.com/yourusername/mini-games-challenge.git</code>
+                    </div>
+                    <div class="instructions">
+                        <h4>Steps to import:</h4>
+                        <ol>
+                            <li>Create a new repository on GitHub</li>
+                            <li>Copy the repository URL</li>
+                            <li>Use: <code>git remote add origin [your-repo-url]</code></li>
+                            <li>Push with: <code>git push -u origin main</code></li>
+                        </ol>
+                    </div>
+                </div>
+                <button class="close-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script src="index.js"></script>
 </body>
 </html>
